@@ -18,3 +18,4 @@ repeating this step to practive
 this is still practive to add text to the git hub website
 this is an edit I like to make plant terrariums
 Navigate into this new repository (The one called Data_Course_YOURLASTNAME) and type the following commands in order:
+this is getting boring
