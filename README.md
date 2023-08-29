@@ -14,3 +14,4 @@ I changed this commit
 >>>>>>> d4074cbfda1ab9e4697e7b88748fc2dfca26259b
 this is an edit for assignment 1
 this is an edit for class data analysis zahn
+repeating this step to practive
