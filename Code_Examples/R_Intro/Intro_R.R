@@ -32,19 +32,23 @@
 bob = 3+4 # This assigns the evaluated function (3 + 4) to an object (like a variable) called "bob"
 # bob should equal 7
 jane <- 5*2 # This assigns the value of 5 times 2 to an object called "jane" - Either symbol works
-
+jane - bob
 # LOGICAL EVALUATIONS
 
 # R can process a host of logical evaluations.  For example we can ask whether bob or jane is greater...
 bob > jane # This gives us the value "FALSE" - bob is 7, jane is 10
 bob < jane # This gives the value "TRUE"
 bob %in% c(1,2,3,4,5,6,7)
+bob == 7
+bob >= 4
 c(1,2,3,4,5,6,7) %in% bob
 bob >= jane
 bob == jane
 jane == 10
 (jane == 10) + 1   #!???
-
+TRUE + TRUE
+5 / FALSE
+T + T
 # The values "TRUE" and "FALSE" are special reserved values. You should never use them as a name for an object!!!
 # This goes for numbers as well. The number "3" cannot be assigned to any other value, for obvious reasons.
 
@@ -63,13 +67,22 @@ jane == 10
 # That stands for "concatenate" and allows you to enter a series of values to be saved to a single object:
 billy = c(2,3,4,5,6) # "billy" is now a NUMERIC VECTOR of 5 values
 # c() requires you to separate the various elements with a comma
+is.vector(billy) #numeric vector 
+
 
 # This works for STRINGS as well. Strings are made up of characters
 suzy = c("This","is","a","character","vector") # notice how each string is enclosed in quotes. That tells R it is a string
 
+billy + suzy
+
+tommy <- c("1",2,3,4,5,TRUE,NA)
 # Think of these values (billy and suzy) like lists.  They have inherent order, so we can access any part of them:
 
 billy[1] # The brackets [] allow you to pick one or more elements from an object.  Here, we asked for the first element
+billy[1:3]
+billy[c(1,3)]
+
+suzy[1:5]
 # What value would billy[3] give you?
 
 # If our vectors are the same lengths, we can easily combine them to form "2-dimensional" data. Most data you
@@ -80,6 +93,9 @@ billy[1] # The brackets [] allow you to pick one or more elements from an object
 observation = c(1,2,3,4,5,6,7,8,9,10) # our vector of observations from a reeated experiment
 wingspan = c(1.2,1.4,1.0,1.2,1.8,2.0,2.2,1.1,2.3,2.0) # our vector of wingspans
 mass = c(0.43,0.44,0.32,0.44,0.52,0.55,0.56,0.42,0.51,0.57) # our vector of mass
+length(observation)
+
+
 
 # we now have three vectors that are the same length. We can stick them together into a "matrix"
 # one way to do this is the cbind() function. It stands for "column bind"
@@ -98,7 +114,11 @@ data
 # So to get the element in row 1, column 3 we write:
 
 data[1,3]
-
+data[,3] > .5
+data[data[,3] > .5,]
+data[5,]
+data[1:10,3]
+#always [row,col]
 # This kind of access is very useful. To add the mass of the first 5 flies we caught, you can write:
 
 data[1,3] + data[2,3] + data[3,3] + data[4,3] + data[5,3]
