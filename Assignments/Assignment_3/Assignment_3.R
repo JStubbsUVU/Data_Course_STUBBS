@@ -28,8 +28,8 @@ vector1 <- c(1,2,3,4,5,6,7,8,9,10)
 vector2 <- c(5,6,7,8,4,3,2,1,3,10)
 vector3 <- letters # letters and LETTERS are built-in vectors
 
-vector1 + 5
-vector2 / 2
+vector1[3] + 5
+vector2[2] / 2
 vector1*vector2
 
 vector3 + 1 # can't add 1 to "a"
@@ -51,6 +51,8 @@ vector1 %in% 1:6
 # R has quite a few built-in data sets
 data("iris") # load it like this
 
+class(iris)
+class(vector3)
 # For built-in data, there's often a 'help file'
 ?iris
 
@@ -64,13 +66,18 @@ dat <- iris # can rename the object to be easier to type if you want
 
 # ways to get a peek at our data set
 names(dat)
-dim(dat)
+dim(dat)[1]
 head(dat)
-
+nrow(dat)
 
 # You can access specific columns of a "data frame" by name using '$'
 dat$Species
+
+factor(dat$Species,ordered = TRUE)
+
+levels(dat$Species)
 dat$Sepal.Length
+class(dat$Species)
 
 # You can also use square brackets to get specific 1-D or 2-D subsets of a data frame (rows and/or columns)
 dat[1,1] # [Rows, Columns]
@@ -110,6 +117,7 @@ as.factor(nums) # show in console
 nums_factor <- as.factor(nums) #assign it to a new object as a factor
 class(nums_factor) # check it
 
+levels(nums_factor)
 
 # convert numeric to character
 as.character(vector1)
@@ -118,12 +126,15 @@ as.character(vector1) + 5
 # convert character to numeric
 as.numeric(vector3)
 
-
+as.numeric(c("1",vector3))
 
 
 #check it out
 plot(nums) 
 plot(nums_factor)
+
+plot(letters)
+plot(as.factor(letters)
 # take note of how numeric vectors and factors behave differently in plot()
 
 
@@ -139,6 +150,10 @@ mean(vector1)
 range(vector1)
 summary(vector1)
 
+class(summary(vector1))
+
+table(nums)
+
 # cumulative functions
 cumsum(vector1)
 cumprod(vector1)
@@ -149,6 +164,8 @@ cummax(vector1)
 dbinom(50,100,.5) # probability of getting exactly 50 heads out of 100 coin flips
 
 
+dat$Sepal.Length <- as.character(dat$Sepal.Length)
+
 
 
 # YOUR REMAINING HOMEWORK ASSIGNMENT (Fill in with code) ####
@@ -156,23 +173,34 @@ dbinom(50,100,.5) # probability of getting exactly 50 heads out of 100 coin flip
 # 1.  Get a subset of the "iris" data frame where it's just even-numbered rows
 
 seq(2,150,2) # here's the code to get a list of the even numbers between 2 and 150
-
+seq(1,150)
+even_rows <- iris[seq(2, nrow(iris), by = 2), ]
+print(even_rows)
 
 
 # 2.  Create a new object called iris_chr which is a copy of iris, except where every column is a character class
-
+data(iris)
+iris_chr <- as.data.frame(lapply(iris, as.character))
+head(iris_chr)
 
 
 # 3.  Create a new numeric vector object named "Sepal.Area" which is the product of Sepal.Length and Sepal.Width
 
+Sepal.Area <- iris$Sepal.Length * iris$Sepal.Width
+head(Sepal.Area)
 
 
 # 4.  Add Sepal.Area to the iris data frame as a new column
 
-
+iris$Sepal.Area <- Sepal.Area
+head(iris)
 
 # 5.  Create a new dataframe that is a subset of iris using only rows where Sepal.Area is greater than 20 
       # (name it big_area_iris)
+big_area_iris <-  iris[Sepal.Area > 20, ]
+head(big_area_iris)
+
+
 
 
 
