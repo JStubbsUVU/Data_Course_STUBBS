@@ -114,8 +114,21 @@ plot(mod3)
 
 #9 Plot the 3 models predictions like so
 
+prediction_data <- expand.grid(u5mr_year = unique(data$u5mr_year), Continent = unique(data$Continent))
 
 
+prediction_data$Prediction1 <- predict(mod1, newdata = prediction_data)
+prediction_data$Prediction2 <- predict(mod2, newdata = prediction_data)
+prediction_data$Prediction3 <- predict(mod3, newdata = prediction_data)
+
+
+ggplot(prediction_data_long, aes(x = u5mr_year, y = Prediction, color = Model)) +
+  geom_line() +
+  facet_wrap(~ Continent, scales = "free_y") +
+  labs(title = "Predictions of the Three Models",
+       x = "Year",
+       y = "Predicted u5mr_year") +
+  theme_minimal()
 
 
 
