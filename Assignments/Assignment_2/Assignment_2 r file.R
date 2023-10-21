@@ -19,3 +19,7 @@ x <- c("sucks", "is stupid", "is cool")
 for (i in x){
   print(paste0("your mom",i))
 }
+
+
+
+library(GGally)

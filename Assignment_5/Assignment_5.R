@@ -1,11 +1,14 @@
-# ggplot2 intoduction 
+# ggplot2 intoduction ... Here, we're just looking at what ggplot2 can do and learning about the basic format
+# of how to build a plot with this powerful package.
 
-# Load ggplot2 (it is included in the tidyverse package) ####
+# Load packages we will use
 library(tidyverse)
+library(carData)
+library(RColorBrewer)
+library(colorblindr)
 
-options(scipen = 999)
 
-# Load the data we will work with (built-in to ggplot)
+# Load the first data set we will work with (built-in to ggplot)
 data("midwest", package = "ggplot2")
 
 # Intro to ggplot syntax
@@ -29,7 +32,7 @@ data("midwest", package = "ggplot2")
 ggplot(midwest) # what do you see?
 
 # give it some aesthetics to work with...
-ggplot(data=midwest, mapping=aes(x=area, y=poptotal))  # area and poptotal are columns in 'midwest'
+ggplot(midwest, aes(x=area, y=poptotal))  # area and poptotal are columns in 'midwest'
 
 # A blank ggplot is drawn. Even though the x and y are specified, there are no points or lines in it. 
 # This is because, ggplot doesn’t assume that you meant a scatterplot or a line chart to be drawn. 
@@ -43,31 +46,18 @@ ggplot(data=midwest, mapping=aes(x=area, y=poptotal))  # area and poptotal are c
 ggplot(midwest, aes(x=area, y=poptotal)) + geom_point() # The "+" tells ggplot to add another layer to our base plot
 
 # Add another geom ... a trendline:
-ggplot(midwest, aes(x=area, y=poptotal, color=state)) +
-  geom_point() + 
-  geom_smooth(method = "lm",linetype=2,color='red')
-
-
-
+ggplot(midwest, aes(x=area, y=poptotal)) + geom_point() + geom_smooth(method = "lm")
 # The line of best fit is in blue. Can you find out what other method options are available for geom_smooth? 
 
 # Store your plot as an object to add to...
 p <- ggplot(midwest, aes(x=area, y=poptotal)) + geom_point() + geom_smooth(method = "lm")
 
-class(p)
-p
-
 # Zoom in
 p + lims(x=c(0,0.1),y=c(0,1000000)) # what did this do?
 p + coord_cartesian(xlim=c(0,0.1), ylim=c(0, 1000000)) # how is this different?
-coord_cartesian()
-p + facet_wrap(~state,scales = 'free')
 
 # Store this new zoomed-in plot
 p2 <- p + coord_cartesian(xlim=c(0,0.1), ylim=c(0, 1000000))
-p$layer
-
-
 
 # Add Title and Labels:
 p2 + labs(title="Area Vs Population", 
@@ -87,16 +77,12 @@ ggplot(midwest, aes(x=area, y=poptotal)) +
 
 # Change color of points and line to static values:
 ggplot(midwest, aes(x=area, y=poptotal)) + 
-  geom_point(color="steelblue",size=3,) + 
+  geom_point(color="steelblue",size=3) + 
   geom_smooth(method="lm",color="firebrick") + 
   coord_cartesian(xlim=c(0,0.1), ylim=c(0, 1000000)) + 
   labs(title="Area Vs Population", subtitle="From midwest dataset", y="Population", x="Area", caption="Midwest Demographics")
 # what else did we change, and how?
-p3 <- ggplot(midwest, aes(x=area, y=poptotal)) + 
-  geom_point(color="steelblue",size=3,) + 
-  geom_smooth(method="lm",color="firebrick") + 
-  coord_cartesian(xlim=c(0,0.1), ylim=c(0, 1000000)) + 
-  labs(title="Area Vs Population", subtitle="From midwest dataset", y="Population", x="Area", caption="Midwest Demographics")
+
 
 # Here's where ggplot gets really cool...
 # Suppose if we want the color to change based on another column in the source dataset, 
@@ -109,17 +95,12 @@ p3 <- ggplot(midwest, aes(x=area, y=poptotal)) +
 p3
 
 # Don't like those colors?
-p3 + scale_color_brewer(palette = "BrGU")
-mypallette <- (c("#917013","#166769"))
-p3 + scale_color_manual(values=mypallette)
-p3 + colorblindr::scale_color_okabeIto()
-colorblindr:: cvd_grid(p3 + colorblinder::scale_) 
+p3 + scale_color_brewer(palette = "Set1")
+
 # Want more color choices? You can check them out in the RColorBrewer package, or even make your own
-library(RColorBrewer)
 brewer.pal.info
 
 # Make your own and take a peek at it:
-library(colorblindr)
 pal = c("#c4a113","#c1593c","#643d91","#820616","#477887","#688e52",
         "#12aa91","#705f36","#8997b2","#753c2b","#3c3e44","#b3bf2d",
         "#82b2a4","#894e7d","#a17fc1","#262a8e","#abb5b5","#000000")
@@ -167,7 +148,6 @@ p5 + geom_bar(stat="identity") # something wrong with this picture!
 
 
 # Geoms for looking at a single variable's distribution:
-library(carData)
 data("MplsStops")
 
 ggplot(MplsStops, aes(x=lat)) + geom_histogram() + labs(title = "Latitude of police stops in Minneapolis - 2017")
@@ -175,36 +155,14 @@ ggplot(MplsStops, aes(x=lat, fill = race)) + geom_density(alpha = .5) + labs(tit
 
 
 ggplot(MplsStops, aes(x=lat, fill = race)) + geom_histogram() + labs(title = "Latitude of police stops in Minneapolis - 2017") +
-  facet_wrap(~race,)
+  facet_wrap(~race)
 
 
 
 # Look at lat AND lon
 ggplot(MplsStops, aes(x=lat,y=long,color=race)) + geom_point() + theme_minimal()
-ggsave("./test.jpg",width=6,height = 6,dpi = 300)
 
 ggplot(MplsStops, aes(x=lat,y=long,color=race)) + geom_point() + theme_minimal() + facet_wrap(~race) # "overplotting!?"
-
-table(MplsStops$race)
-ggplot(MplsStops,)
-
-# Check out the issue with some random data
-random_data = data.frame( x=rnorm(20000, 10, 1.9), y=rnorm(20000, 11, 4.5) )
-
-# quick look at data
-plot(random_data$x)
-
-# Basic scatterplot
-ggplot(random_data, aes(x=x, y=y) ) +
-  geom_point()
-
-# 2D Density plot, instead
-ggplot(random_data, aes(x=x, y=y) ) +
-  geom_bin2d() +
-  theme_bw()
-
-
-# Back to our over-plotted figure from before...
 ggplot(MplsStops, aes(x=lat,y=long,color=race)) + geom_point(alpha=.05) + theme_minimal() + facet_wrap(~race)
 
 ggplot(MplsStops, aes(x=lat,y=long,color=race)) + geom_density_2d() + theme_minimal() + facet_wrap(~race)
@@ -214,21 +172,8 @@ ggplot(MplsStops, aes(x=lat,y=long)) + geom_bin2d()
 ggplot(MplsStops, aes(x=lat,y=long)) + geom_bin2d() + facet_wrap(~race)
 
 
-# try faceting by month
-MplsStops$Month <- months(MplsStops$date)
-(MplsStops$date)
-
-ggplot(MplsStops, aes(x=lat,y=long)) + geom_bin2d() + facet_wrap(~Month)
-
-library(gganimate)
-library(gifski)
-ggplot(MplsStops, aes(x=lat,y=long)) + geom_bin2d() +
-  labs(title = "Month: {frame_state}") +
-  transition_time(date) +
-  ease_aes('linear')
 
 
-gganimate::
 # More advanced understanding of R functions will be required to replicate the following section, but it
 # is included as an example follow-up analysis
 
@@ -256,10 +201,21 @@ ggplot(counts, aes(x=Var1,y=Freq)) + geom_point() + geom_smooth(method="lm") +
   theme_minimal()
 
 
+random_data = data.frame( x=rnorm(20000, 10, 1.9), y=rnorm(20000, 11, 4.5) )
 
 
+# quick look at data
+plot(random_data$x)
 
 
+# Basic scatterplot
+ggplot(random_data, aes(x=x, y=y) ) +
+  geom_point()
+
+# 2D Density plot, instead
+ggplot(random_data, aes(x=x, y=y) ) +
+  geom_bin2d() +
+  theme_bw()
 
 
 
