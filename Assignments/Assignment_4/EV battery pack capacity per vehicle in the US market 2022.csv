@@ -1,0 +1,36 @@
+Make,Model,Year,Average EV Battery Pack Capacity (kWh)
+Atlis Motor Vehicles,XT,2022,125
+Audi,e-tron,2021,95
+Audi,e-tron GT,2021,93
+BMW,iX,2022,111.5
+BMW,i3,2021,42.2
+BMW,i4,2021,80
+BYD,e6,2021,80
+Cadillac,LYRIQ,2022,100
+Chevrolet,Bolt,2021,63
+Chevrolet,Bolt EUV,2021,65
+Ford,Mustang Mach-E,2021,85
+Hyundai,IONIQ Electric,2021,38.3
+Hyundai,Kona Electric,2021,64
+Hyundai,Ioniq 5,2021,65.3
+Jaguar,I-Pace,2021,90
+Kia,Soul,2015,31
+Kia,EV6 GT,2021,77.4
+Kia,Niro,2021,58
+Lucid,Air,2022,113
+Mercedes Benz,EQC,2021,80
+MINI,Mini Cooper SE Electric,2021,32
+Nissan,Leaf,2022,51
+Nissan,Ariya,2021,63
+Polestar,Polestar 2,2021,78
+Porsche,Taycan,2022,86.3
+Rivian,R1T,2021,105
+Rivian,R1S,2021,105
+Tesla,Model 3,2022,66
+Tesla,Model Y,2021,75
+Tesla,Model X,2021,100
+Volkswagen,I.D. 4,2021,48
+Volkswagen,I.D. Buzz,2022,111
+Volvo,XC40 Recharge,2021,75
+Volvo,C40 Recharge,2021,75
+Average,,,77

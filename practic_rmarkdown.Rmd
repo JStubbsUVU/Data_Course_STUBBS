@@ -1,0 +1,33 @@
+---
+title: "rmarkddown_practive"
+author: "Josh Stubbs"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+This is text. I'm gonna load a data set and try to clean it. 
+
+'''{r}
+library(tidyverse)
+path <- "./Data/Soil_Predators.csv"
+
+df <- read_csv(path,skip = 1col_names = FALSE)
+badcolnames <- readLines(path,n = 1)
+badcolnames <- badcolnames %>% str_replace_all(",_","_") %>%  str_split(",") %>% unlist()
+
+# NOW I'M GONNA 
+
+```{r}
+df %>% select(starts_with("consumption")) %>% rowums(na.rm = TRUE)
+df$
+
+
+
+
+
+```
