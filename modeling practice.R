@@ -60,7 +60,7 @@ n5 <- glm(data=mpg,formula = hwy ~ log(displ))
 
 Titanic %>% as.data.frame()
 
-df <- read_csv("./Downloads/data_course_STUBBS/GradSchool_Admissions.csv")
+df <- read_csv("../../Data/GradSchool_Admissions.csv")
 
 df <- df %>% 
   mutate(admit = as.logical(admit))
