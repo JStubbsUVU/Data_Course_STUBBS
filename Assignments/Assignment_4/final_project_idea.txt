@@ -1,0 +1,14 @@
+1.    Create a plaintext document named "final_project_idea.txt"
+
+2.    In it, describe your idea for a data analysis final project
+
+I am looking into some data sets on electric vehicles and would like to analyze the range and Kw density of the vehicles. 
+
+3.    Also, Describe the sort of data you will use, potential sources, and what the data might look like
+I have found some excel data sets of plug in hybrid (phev) and all electric (BEV) vehicles and it list the make and model along with range and kw size. I am wanting to look into the weight as well. 
+
+4.    (If you already have data, skip this task) Create fake data that simulates what your final project data set might look like. Preferrably a csv file
+
+5.    Generate a plot (using ggplot) using either your real or fake data that shows at least one expected result
+
+The plot is saved and placed under the assignment 4 folder. however it shows that the amont of kw average went up from 2021 to 2022 however, it also made me realize I have an outlier from 2015. I may want to find more data to include older years. 
