@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+=======
 # Data_Course_STUBBSThis README file contains information about my uploaded assignments
 This README file contains information about my uploaded assignments
 This README file contains information about my uploaded assignments
@@ -20,3 +22,4 @@ this is an edit I like to make plant terrariums
 Navigate into this new repository (The one called Data_Course_YOURLASTNAME) and type the following commands in order:
 this is getting boring
 this readme file is hopefully the last one for today
+>>>>>>> 75431091ddc67cd612f428c1ffda65663c080f69
