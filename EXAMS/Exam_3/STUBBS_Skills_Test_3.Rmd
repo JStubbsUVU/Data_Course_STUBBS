@@ -1,0 +1,217 @@
+---
+title: "STUBBS_Skills_Test_3"
+author: "Josh Stubbs"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(skimr)
+library(janitor)
+library(tidyr)
+library(broom)
+library(tidyverse)
+library(readxl)
+library(lubridate)
+library(gganimate)
+library(transformr)
+library(stringr)
+library(gganimate)
+library(gifski)
+library(dplyr)
+library(sf)
+library(gplots)
+library(scales)
+library(easystats)
+library(ggplot2)
+library(readr)
+```
+
+# Goal of test
+The goal is to us Rstudio to clean and analyze the 2 provided datasets. This will include cleaning data, modeling, and data analysis. 
+
+# Task 1: "FacultySalaries_1995.csv"
+The first task involves loading and cleaning the "FacultySalaries_1995.csv" dataset. It is important to understand what is in the data set to better analyze and clean it. 
+
+
+# Read Data:
+
+The code creates a file path and reads in a CSV file named "FacultySalaries_1995.csv" into a data frame. The read.csv function is used to read the CSV file.
+```{r}
+
+FacultySalaries_1995 <- read_csv("FacultySalaries_1995.csv")
+fsalary <- FacultySalaries_1995
+
+
+```
+
+
+# Clean Data:
+
+Pivot_longer column is used to stretch longer and split columns. 
+
+```{r}
+
+fsalary <- fsalary %>% 
+  pivot_longer(cols = c("AvgFullProfSalary", "AvgAssocProfSalary", "AvgAssistProfSalary"),
+               names_to = "Rank",
+               values_to = "Salary") %>% 
+  pivot_longer(cols = c("AvgFullProfComp", "AvgAssocProfComp", "AvgAssistProfComp"),
+               names_to = "Rank_Comp",
+               values_to = "Compensation") %>% 
+  pivot_longer(cols = c("NumFullProfs", "NumAssocProfs", "NumAssistProfs", "NumInstructors"),
+               names_to = "Rank_Num",
+               values_to = "Staff_Number") %>% 
+  mutate(Rank = case_when(Rank == "AvgFullProfSalary" ~ "Full",
+                          Rank == "AvgAssocProfSalary" ~ "Assoc",
+                          Rank == "AvgAssistProfSalary" ~ "Assist"))
+
+
+```
+
+# Filter Data:
+
+clears rows where the "Tier" variable is equal to "VIIB".
+
+```{r}
+
+fsalary <- fsalary[!(fsalary$Tier=="VIIB"), ]
+```
+
+# Visual Data:
+
+create a boxplot of salary distribution (Salary) across different faculty ranks (Rank), with each rank having a different fill color.
+
+
+```{r pt.2, warning=FALSE}
+
+fsalary %>% 
+  ggplot(aes(x=Rank,y=Salary)) +
+  geom_boxplot(aes(fill=Rank)) +
+  facet_wrap(~Tier) +
+  theme_minimal() +
+  theme(legend.key.size = unit(1, "cm"),
+        legend.title = element_text(size = 19, color = "black"),
+        legend.text = element_text(size = 13, color = "black"),
+        axis.text.x = element_text(angle = 65, size = 13, color = "black"),
+        axis.text.y = element_text(size = 13, color = "black"),
+        axis.title.x = element_text(size = 19, color = "black"),
+        axis.title.y = element_text(size = 19, color = "black"),
+        strip.text.x = element_text(size = 13, color = "black"))
+
+```
+
+# Export Figure:
+
+The ggsave function is then used to save the created plot as a JPEG image.
+
+```{r warning=FALSE}
+ggsave("./STUBBS_fig_1.jpg")
+```
+
+# Task 2: ANOVA Modeling
+In the second task an (ANOVA) model is made to examine the influence of "State," "Tier," and "Rank" on "Salary."
+
+# Build and Analyze ANOVA Model:
+
+This code creates a generalized linear model (GLM) where Salary is shown as a function  of Rank, State, and Tier in the data set. The summary function of the fitted GLM model, shows coefficients, standard errors, t-values, and p-values.
+
+```{r}
+model_1 <- glm(data = fsalary, 
+            formula = Salary ~ Rank + State + Tier )
+summary(model_1)
+```
+
+# Export ANOVA Summary:
+
+The sink function saves the output to a file ("Salary_ANOVA_Summary.txt") instead of the console, providing a written summary of the ANOVA results.
+
+```{r pt.3,}
+
+anova(model_1)
+summary(model_1)
+
+sink("./Salary_ANOVA_Summary.txt") 
+anova(model_1)
+sink(NULL)
+
+```
+
+
+# Task 3: Juniper_Oils.csv
+
+The task is to clean and prepare data for analysis. This dataset contains measurements of chemical concentrations in the essential oil of cedar trees over various years since a burn event.
+
+# Clean and Tidy Another Dataset:
+This code reads the data from "Juniper_Oils.csv" and tidies it by converting chemical concentrations from wide to long format using pivot_longer.
+
+```{r pt.4,}
+
+Juniper_Oils <- read_csv("Juniper_Oils.csv")
+
+Juniper_Oils <- Juniper_Oils %>% 
+  pivot_longer(cols = c("alpha-pinene","para-cymene","alpha-terpineol","cedr-9-ene",
+                        "alpha-cedrene","beta-cedrene","cis-thujopsene","alpha-himachalene",
+                        "beta-chamigrene","cuparene","compound 1","alpha-chamigrene",
+                        "widdrol","cedrol","beta-acorenol","alpha-acorenol","gamma-eudesmol",
+                        "beta-eudesmol","alpha-eudesmol","cedr-8-en-13-ol","cedr-8-en-15-ol",
+                        "compound 2","thujopsenal"),
+               names_to = "ChemicalID",
+               values_to = "Concentration")
+```
+
+# Task 4: Graphical Representation
+Make graph of relationship between "YearsSinceBurn" and "Concentration" for different chemical compounds. 
+
+# Data Prep.:
+Use ggplot to make and plot information. 
+
+```{r}
+Juniper_Oils %>% 
+  ggplot(aes(x=YearsSinceBurn, y=Concentration)) +
+  facet_wrap(~ChemicalID, scales = "free_y") +
+  geom_smooth(method = loess) +
+  theme_minimal() +
+  labs(x = "Years Since Burn",
+       title = "Concentration by Chemical") +
+  theme(plot.title = element_text(hjust = 0.5))
+
+
+```
+
+# Exporting the Plot:
+
+ggsave saves the plot as an image file named "STUBBS_Fig_2.jpg" in the current working directory.
+```{r}
+# export to millerberg_Fig_2.jpg
+ggsave("./STUBBS_Fig_2.jpg")
+```
+
+## Task 5: Generalized Linear Model
+The final task is to use a (GLM) and tidy() function. 
+
+# Generalized Linear Model
+
+```{r}
+model2 <- glm(data = Juniper_Oils, formula = Concentration ~ ChemicalID * YearsSinceBurn)
+
+model2_sum <- summary(Juniper_Oils)
+
+```
+
+# Tidy Data Frame:
+Tidy function from the broom package is used to tidy up the model results.
+
+```{r}
+tidy <- tidy(model2)
+
+```
+
+# Subset Tidy Data Frame:
+This give p-value and prints it for viewing. 
+```{r}
+ttss <- tidy[c(tidy$p.value <= 0.05), ]
+print(ttss)
+```
