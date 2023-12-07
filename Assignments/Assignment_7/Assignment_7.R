@@ -1,3 +1,7 @@
+
+# In this assignment, you will use R (within R-Studio) to:
+# 1) Take a real life data set and wrangle it into shape
+# 2) Make some exploratory analyses on that cleaned data
 # 3) Explore the cleaned data set with a series of figures 
 # (I want to see you exploring the data set)
 
@@ -29,7 +33,7 @@ library(gplots)
 
 
 # Load the data and create the Location column
-data <- read.csv("../../Assignments/Assignment_7/Utah_Religions_by_County.csv") %>% 
+data <- read.csv("../../Data/Utah_Religions_by_County.csv") %>% 
   clean_names()
 names(data)
 
@@ -176,4 +180,3 @@ correlation <- cor(subset_lds$pop_2010, subset_lds$lds_proportion)
 
 # Print the correlation coefficient
 cat("Correlation between Pop_2010 and LDS proportion:", correlation, "\n")
-
