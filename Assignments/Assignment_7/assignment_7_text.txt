@@ -1,0 +1,14 @@
+Address the questions:
+
+“Does population of a county correlate with the proportion of any specific religious group in that county?”
+From looking at the correlation between population and proportion, I would say that there is not a strong correlation between counties.
+It does show that the higher the population the higher religious groups/members, but this seems like it would be the case just based on population not necessarily the county. 
+
+
+“Does proportion of any specific religion in a given county correlate with the proportion of non-religious people?”
+Just stick to figures and maybe correlation indices…no need for statistical tests yet
+Yes, there appears to be a strong correlation. I think this is because the higher the religous people, the lower the non religous. I would think that 
+there is going to be a correlation not just for religous groups but religous people in general. 
+
+
+The correlation value calculated is -0.26553838

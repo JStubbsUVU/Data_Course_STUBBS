@@ -1,4 +1,3 @@
-
 # In this assignment, you will use R (within R-Studio) to:
 # 1) Take a real life data set and wrangle it into shape
 # 2) Make some exploratory analyses on that cleaned data
@@ -88,9 +87,7 @@ ggplot(subset2, aes(x = religious_proportion, y = non_religious_proportion)) +
 
 # Mapping religion data on a map of utah
 # mydata <-  map_data("world")
-# view(mydata)
-#I Was trying to plot the religions on a GEO map. I ran out of 
-# time for this more complex of a task
+# view(mydata)  
 
 # Here are some plots using the gather data set.
 names(data_gather)
@@ -144,25 +141,6 @@ ggplot(data_gather, aes(x = Religion, y = Proportion, fill = Religion)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 
-# this heat map analysis didnt work out the way I thought it would.
-#heatmap 
-# data_heatmap_numeric <- data_heatmap[, -1]
-# 
-# # Convert the remaining data to a numeric matrix
-# heatmap_data <- as.matrix(data_heatmap_numeric)
-# 
-# # Create the heatmap using the numeric matrix
-# heatmap.2(heatmap_data, 
-#           trace = "none",
-#           Colv = "religion",
-#           scale = "column",
-#           dendrogram = "none",
-#           key = TRUE,
-#           keysize = 1.5,
-#           cexCol = 0.8,
-#           cexRow = 0.8,
-#           margins = c(5, 10)
-# )
 
 
 # Calculate the proportion of the specific religious group within each county,
@@ -180,3 +158,4 @@ correlation <- cor(subset_lds$pop_2010, subset_lds$lds_proportion)
 
 # Print the correlation coefficient
 cat("Correlation between Pop_2010 and LDS proportion:", correlation, "\n")
+
